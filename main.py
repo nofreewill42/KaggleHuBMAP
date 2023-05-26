@@ -34,4 +34,5 @@ nofreewill@nofreewill:/media/nofreewill/8TB-SSD/Visual/hubmap-hacking-the-human-
         source_wsi Identifies the WSI.
         age, sex, race, height, weight, and bmi demographic information about the tissue donor.'''
     
+    # Read in the tile_meta.csv file
     
