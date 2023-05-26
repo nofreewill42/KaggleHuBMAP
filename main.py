@@ -37,4 +37,4 @@ nofreewill@nofreewill:/media/nofreewill/8TB-SSD/Visual/hubmap-hacking-the-human-
     # Read in the tile_meta.csv file
     tile_meta = pd.read_csv(ds_path / 'tile_meta.csv')
     print(tile_meta.head())
-    
+    print(tile_meta.info())
