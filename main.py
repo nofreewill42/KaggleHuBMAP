@@ -77,4 +77,16 @@ nofreewill@nofreewill:/media/nofreewill/8TB-SSD/Visual/hubmap-hacking-the-human-
     # print(annotations[0]['coordinates']) -> [[167, 249], [166, 249], [165, 249], [164, 249], [163, 249], [162, 249], [161, 249], [160, 249], [159, 249], [158, 249], [157, 249], [156, 249], [155, 249], [154, 249], ...]
     coordinates = annotations[0]['coordinates']
 
+    # create a mask image
+    mask = Image.new('L', img_pil.size, 0)
+    for coordinate in coordinates:
+        mask.putpixel(tuple(coordinate), 255)
+    
+    # show mask
+    mask.show()
+
+    # show mask on top of image
+    img_pil.paste(mask, (0, 0), mask)
+    img_pil.show()
+
     
