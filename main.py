@@ -54,10 +54,8 @@ nofreewill@nofreewill:/media/nofreewill/8TB-SSD/Visual/hubmap-hacking-the-human-
     # pytorch dataset class
     class HuBMAPDataset(Dataset):
         def __init__(self, tile_polygons):
-            self.tile_polygons = tile_polygons
-
             # Drop everything except dataset type 1
-            self.tile_polygons = self.tile_polygons[self.tile_polygons['dataset'] == 1]
+            self.tile_polygons = tile_polygons[tile_polygons['dataset'] == 1]
 
         def __len__(self):
             return len(self.tile_polygons)
