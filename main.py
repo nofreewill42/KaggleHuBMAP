@@ -44,4 +44,4 @@ nofreewill@nofreewill:/media/nofreewill/8TB-SSD/Visual/hubmap-hacking-the-human-
     # Read in the polygons.jsonl file
     polygons = pd.read_json(ds_path / 'polygons.jsonl', lines=True)
 
-    # Read in the sample_submission.csv file
+    # Merge the DataFrames
