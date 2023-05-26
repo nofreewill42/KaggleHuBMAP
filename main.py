@@ -1,6 +1,7 @@
 import pandas as pd
 from pathlib import Path
 from PIL import Image
+import numpy as np
 
 from torch.utils.data import Dataset
 
@@ -63,31 +64,12 @@ nofreewill@nofreewill:/media/nofreewill/8TB-SSD/Visual/hubmap-hacking-the-human-
         def __getitem__(self, idx):
             # Read in the image
             img_pil = Image.open(ds_path / 'train' / (self.tile_polygons.iloc[idx]['id'] + '.tif'))
-            return img_pil, self.tile_polygons.iloc[idx]['annotations']
+            annotations = self.tile_polygons.iloc[idx]['annotations']
+            
+            # Initialize mask
+            mask = np.zeros((512, 512), dtype=np.float32)
+                
+
+            return img_pil, 
 
     ds = HuBMAPDataset(tile_polygons)
-
-    # load the first data sample
-    img_pil, annotations = ds[0]
-    print(img_pil.size)
-
-    # show img_pil
-    img_pil.show()
-
-    # show one annotation
-    # print(annotations[0]['coordinates']) -> [[[167, 249], [166, 249], [165, 249], [164, 249], [163, 249], [162, 249], [161, 249], [160, 249], [159, 249], [158, 249], [157, 249], [156, 249], [155, 249], [154, 249], ...]]
-    coordinates = annotations[0]['coordinates'][0]
-
-    # create a mask image
-    mask = Image.new('L', img_pil.size, 0)
-    for coordinate in coordinates:
-        mask.putpixel(tuple(coordinate), 255)
-    
-    # show mask
-    mask.show()
-
-    # show mask on top of image
-    img_pil.paste(mask, (0, 0), mask)
-    img_pil.show()
-
-    
