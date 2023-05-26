@@ -37,7 +37,6 @@ nofreewill@nofreewill:/media/nofreewill/8TB-SSD/Visual/hubmap-hacking-the-human-
     
     # Read in the tile_meta.csv file
     tile_meta = pd.read_csv(ds_path / 'tile_meta.csv')
-    print(tile_meta.head())
     
     # Read in the wsi_meta.csv file
     wsi_meta = pd.read_csv(ds_path / 'wsi_meta.csv')
@@ -46,7 +45,8 @@ nofreewill@nofreewill:/media/nofreewill/8TB-SSD/Visual/hubmap-hacking-the-human-
     polygons = pd.read_json(ds_path / 'polygons.jsonl', lines=True)
 
     # Merge the DataFrames
-    tile_polygons = tile_meta.merge(polygons, on='id')
+    df = tile_meta.merge(polygons, on='id')
+    df 
 
     # Print the first five rows of tile_polygons
     print(tile_polygons.head())
