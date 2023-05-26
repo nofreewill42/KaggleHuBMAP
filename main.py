@@ -1,3 +1,4 @@
+import pandas as pd
 from pathlib import Path
 
 
@@ -45,3 +46,7 @@ nofreewill@nofreewill:/media/nofreewill/8TB-SSD/Visual/hubmap-hacking-the-human-
     polygons = pd.read_json(ds_path / 'polygons.jsonl', lines=True)
 
     # Merge the DataFrames
+    tile_polygons = tile_meta.merge(polygons, on='id')
+
+    # Print the first five rows of tile_polygons
+    print(tile_polygons.head())
