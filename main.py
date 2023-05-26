@@ -1,6 +1,8 @@
 import pandas as pd
 from pathlib import Path
 
+from torch.utils.data import DataLoader
+
 from data_loader import HuBMAPDataset
 
 
@@ -24,5 +26,7 @@ if __name__ == '__main__':
 
 
     ds = HuBMAPDataset(ds_path, tile_polygons)
+    dl = DataLoader(ds, batch_size=1, shuffle=True, num_workers=4, pin_memory=True, drop_last=True, prefetch_factor=2)
 
-    print(ds[0])
+    for i, (img, mask) in enumerate(dl):
+is         print(i, img.shape, mask.shape)

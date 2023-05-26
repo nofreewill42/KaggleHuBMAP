@@ -1,5 +1,7 @@
 from PIL import Image
 import numpy as np
+import cv2
+
 
 import torch
 from torch.utils.data import Dataset
@@ -22,7 +24,7 @@ class HuBMAPDataset(Dataset):
         mask_np = self.create_mask(annotations)
 
         # convert to torch tensor
-        img_tensor = torch.from_numpy(img_np).float()
+        img_tensor = torch.from_numpy(img_np).permute(2,0,1).float()
         mask_tensor = torch.from_numpy(mask_np).long()
 
         return img_tensor, mask_tensor
@@ -34,16 +36,10 @@ class HuBMAPDataset(Dataset):
         masks = np.zeros((3, 512, 512), dtype=np.float32)
         # Process annotations - aka fill in the mask
         for annot in annotations:
-            assert len(annot['coordinates']) == 1  # This is the first assertion in my life that I've seen it's use
-            cords = annot['coordinates'][0]        # I mean, I suppose it always has only one element, but to not having to check it and still not needing to worry....
             atype = annotation_types.index(annot['type'])
-            # for cords in annot['coordinates']:   !this when the assert comes!
+            cords = annot['coordinates']
             for cord in cords:
-                cord_np = np.asarray(cord, dtype=np.int32)
-                cord_np = cord_np.T
-                rr, cc = cord_np
-                masks[atype][rr, cc] = 1
-        # fill in the mask
-        
-
+                lines = np.array(cord)
+                lines = lines.reshape(-1, 1, 2)
+                cv2.fillPoly(masks[atype], [lines], 255)
         return masks
