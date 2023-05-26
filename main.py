@@ -35,4 +35,6 @@ nofreewill@nofreewill:/media/nofreewill/8TB-SSD/Visual/hubmap-hacking-the-human-
         age, sex, race, height, weight, and bmi demographic information about the tissue donor.'''
     
     # Read in the tile_meta.csv file
+    tile_meta = pd.read_csv(ds_path / 'tile_meta.csv')
+    print(tile_meta.head())
     
