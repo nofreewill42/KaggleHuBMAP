@@ -65,22 +65,27 @@ nofreewill@nofreewill:/media/nofreewill/8TB-SSD/Visual/hubmap-hacking-the-human-
             # Read in the image
             img_pil = Image.open(ds_path / 'train' / (self.tile_polygons.iloc[idx]['id'] + '.tif'))
             annotations = self.tile_polygons.iloc[idx]['annotations']
+
+            img_np = np.asarray(img_pil, dtype=np.float32)/255
+            mask_np = self.create_mask(annotations)
+
+            return img_np, mask_np
             
+
+        def create_mask(self, annotations):
             # Initialize mask
             mask = np.zeros((512, 512), dtype=np.float32)
             # Process annotations - aka fill in the mask
             for annot in annotations:
                 assert len(annot['coordinates']) == 1  # This is the first assertion in my life that I've seen it's use
                 cords = annot['coordinates'][0]        # I mean, I suppose it always has only one element, but to not having to check it and still not needing to worry....
-                cords_np = np.array(cords).T
                 if annot['type'] == "blood_vessel":
-                        
-                    rr, cc = cord_t[1], cord_t[0]
-                    rr, cc = np.array([i[1] for i in cord]), np.asarray([i[0] for i in cord])
-                    mask[rr, cc] = 1
-            
-
-            return img_pil, 
+                    for cord in cords:
+                        cord_np = np.asarray(cord, dtype=np.int32)
+                        cord_np = cord_np.T
+                        rr, cc = cord_np
+                        mask[rr, cc] = 1
+            return mask
 
     ds = HuBMAPDataset(tile_polygons)
 
