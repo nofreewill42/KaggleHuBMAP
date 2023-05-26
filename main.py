@@ -46,7 +46,7 @@ nofreewill@nofreewill:/media/nofreewill/8TB-SSD/Visual/hubmap-hacking-the-human-
 
     # Merge the DataFrames
     df = tile_meta.merge(polygons, on='id')
-    df = df.merge(wsi_meta, on='source_wsi')
+    df = df.merge(wsi_meta, on='id')
 
     # Print the first five rows of tile_polygons
-    print(tile_polygons.head())
+    print(df.head())
