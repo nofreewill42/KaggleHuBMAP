@@ -1,5 +1,6 @@
 import pandas as pd
 from pathlib import Path
+from PIL import Image
 
 
 
@@ -58,4 +59,4 @@ nofreewill@nofreewill:/media/nofreewill/8TB-SSD/Visual/hubmap-hacking-the-human-
         
         def __getitem__(self, idx):
             # Read in the image
-            img = skimage.io.imread(...
+            img_pil
