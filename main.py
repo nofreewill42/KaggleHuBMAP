@@ -37,4 +37,11 @@ nofreewill@nofreewill:/media/nofreewill/8TB-SSD/Visual/hubmap-hacking-the-human-
     # Read in the tile_meta.csv file
     tile_meta = pd.read_csv(ds_path / 'tile_meta.csv')
     print(tile_meta.head())
-    print(tile_meta.info())
+    
+    # Read in the wsi_meta.csv file
+    wsi_meta = pd.read_csv(ds_path / 'wsi_meta.csv')
+
+    # Read in the polygons.jsonl file
+    polygons = pd.read_json(ds_path / 'polygons.jsonl', lines=True)
+
+    # Read in the sample_submission.csv file
