@@ -13,9 +13,25 @@ polygons.jsonl                            tile_meta.csv
 sample_submission.csv                     train
 nofreewill@nofreewill:/media/nofreewill/8TB-SSD/Visual/hubmap-hacking-the-human-vasculature$
     '''
+    
+    '''
+    Files and Field Descriptions
 
-    # Read in the csv files
-    wsi_meta = pd.read_csv(ds_path / 'wsi_meta.csv')
-    tile_meta = pd.read_csv(ds_path / 'tile_meta.csv')
+    {train|test}/ Folders containing TIFF images of the tiles. Each tile is 512x512 in size.
+    polygons.jsonl Polygonal segmentation masks in JSONL format, available for Dataset 1 and Dataset 2. Each line gives JSON annotations for a single image with:
+        id Identifies the corresponding image in train/
+        annotations A list of mask annotations with:
+        type Identifies the type of structure annotated:
+            blood_vessel The target structure. Your goal in this competition is to predict these kinds of masks on the test set.
+            glomerulus A capillary ball structure in the kidney. These parts of the images were excluded from blood vessel annotation. You should ensure none of your test set predictions occur within glomerulus structures as they will be counted as false positives. Annotations are provided for test set tiles.
+            unsure A structure the expert annotators cannot confidently distinguish as a blood vessel.
+        coordinates A list of polygon coordinates defining the segmentation mask.
+    tile_meta.csv Metadata for each image.
+        source_wsi Identifies the WSI this tile was extracted from.
+        {i|j} The location of the upper-left corner within the WSI where the tile was extracted.
+        dataset The dataset this tile belongs to, as described above.
+    wsi_meta.csv Metadata for the Whole Slide Images the tiles were extracted from.
+        source_wsi Identifies the WSI.
+        age, sex, race, height, weight, and bmi demographic information about the tissue donor.'''
     
     
