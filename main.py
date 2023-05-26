@@ -2,6 +2,8 @@ import pandas as pd
 from pathlib import Path
 from PIL import Image
 
+from torch.utils.data import Dataset
+
 
 
 if __name__ == '__main__':
@@ -65,7 +67,8 @@ nofreewill@nofreewill:/media/nofreewill/8TB-SSD/Visual/hubmap-hacking-the-human-
     ds = HuBMAPDataset(tile_polygons)
 
     # load the first data sample
-    img, annotations = ds[0]
-    print(img.size)
+    img_pil, annotations = ds[0]
+    print(img_pil.size)
 
-    
+    # show img_pil
+    img_pil.show()
