@@ -64,4 +64,8 @@ nofreewill@nofreewill:/media/nofreewill/8TB-SSD/Visual/hubmap-hacking-the-human-
 
     ds = HuBMAPDataset(tile_polygons)
 
-    # load the first d
+    # load the first data sample
+    img, annotations = ds[0]
+    print(img.size)
+
+    
