@@ -14,6 +14,5 @@ sample_submission.csv                     train
 nofreewill@nofreewill:/media/nofreewill/8TB-SSD/Visual/hubmap-hacking-the-human-vasculature$
     '''
 
-    # Read in the wsi_meta.csv file
-    wsi_meta = pd.read_csv(ds_path / 'wsi_meta.csv')
+    # Read in the csv files
     
