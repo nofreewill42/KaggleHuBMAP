@@ -64,4 +64,4 @@ nofreewill@nofreewill:/media/nofreewill/8TB-SSD/Visual/hubmap-hacking-the-human-
 
     ds = HuBMAPDataset(tile_polygons)
 
-    # loa
+    # load the first image
