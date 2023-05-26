@@ -73,3 +73,8 @@ nofreewill@nofreewill:/media/nofreewill/8TB-SSD/Visual/hubmap-hacking-the-human-
     # show img_pil
     img_pil.show()
 
+    # show one annotation
+    # print(annotations[0]['coordinates']) -> [[167, 249], [166, 249], [165, 249], [164, 249], [163, 249], [162, 249], [161, 249], [160, 249], [159, 249], [158, 249], [157, 249], [156, 249], [155, 249], [154, 249], ...]
+    coordinates = annotations[0]['coordinates']
+
+    
