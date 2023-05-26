@@ -61,7 +61,7 @@ nofreewill@nofreewill:/media/nofreewill/8TB-SSD/Visual/hubmap-hacking-the-human-
         
         def __getitem__(self, idx):
             # Read in the image
-            img_pil = Image.open(ds_path / 'train' / self.tile_polygons.loc[idx, 'id'] / '.tif')
+            img_pil = Image.open(ds_path / 'train' / (self.tile_polygons.loc[idx, 'id'] + '.tif'))
             return img_pil, self.tile_polygons.loc[idx, 'annotations']
 
     ds = HuBMAPDataset(tile_polygons)
