@@ -1,42 +1,49 @@
-import torch
-from torch.utils.data import Dataset
 from PIL import Image
-import os
-import json
 import numpy as np
 
-class CustomDataset(Dataset):
-    def __init__(self, image_dir, labels_file, transform=None):
-        with open(labels_file, 'r') as json_file:
-            self.json_labels = [json.loads(line) for line in json_file]
+import torch
+from torch.utils.data import Dataset
 
-        self.image_dir = image_dir
-        self.transform = transform
+
+class HuBMAPDataset(Dataset):
+    def __init__(self, ds_path, tile_polygons):
+        self.ds_path = ds_path
+        self.tile_polygons = tile_polygons[tile_polygons['dataset'] == 1] # Drop everything except dataset type 1
 
     def __len__(self):
-        return len(self.json_labels)
-
+        return len(self.tile_polygons)
+    
     def __getitem__(self, idx):
-        # Load image
-        image_path = os.path.join(self.image_dir, f"{self.json_labels[idx]['id']}.tif")
-        image = Image.open(image_path)
+        # Read in the image
+        img_pil = Image.open(self.ds_path / 'train' / (self.tile_polygons.iloc[idx]['id'] + '.tif'))
+        annotations = self.tile_polygons.iloc[idx]['annotations']
 
+        img_np = np.asarray(img_pil, dtype=np.float32)/255
+        mask_np = self.create_mask(annotations)
+
+        # convert to torch tensor
+        img_tensor = torch.from_numpy(img_np).float()
+        mask_tensor = torch.from_numpy(mask_np).long()
+
+        return img_tensor, mask_tensor
+        
+
+    def create_mask(self, annotations):
+        annotation_types = ['blood_vessel', 'glomerulus', 'unsure']
         # Initialize mask
-        mask = np.zeros((512, 512), dtype=np.float32)
+        masks = np.zeros((3, 512, 512), dtype=np.float32)
+        # Process annotations - aka fill in the mask
+        for annot in annotations:
+            assert len(annot['coordinates']) == 1  # This is the first assertion in my life that I've seen it's use
+            cords = annot['coordinates'][0]        # I mean, I suppose it always has only one element, but to not having to check it and still not needing to worry....
+            atype = annotation_types.index(annot['type'])
+            # for cords in annot['coordinates']:   !this when the assert comes!
+            for cord in cords:
+                cord_np = np.asarray(cord, dtype=np.int32)
+                cord_np = cord_np.T
+                rr, cc = cord_np
+                masks[atype][rr, cc] = 1
+        # fill in the mask
+        
 
-        # Process annotations
-        for annot in self.json_labels[idx]['annotations']:
-            cords = annot['coordinates']
-            if annot['type'] == "blood_vessel":
-                for cord in cords:
-                    rr, cc = np.array([i[1] for i in cord]), np.asarray([i[0] for i in cord])
-                    mask[rr, cc] = 1
-
-        # Convert PIL Image and mask to PyTorch tensor
-        image = torch.tensor(np.array(image), dtype=torch.float32).permute(2, 0, 1)  # Shape: [C, H, W]
-        mask = torch.tensor(mask, dtype=torch.float32)
-
-        if self.transform:
-            image = self.transform(image)
-
-        return image, mask
+        return masks
