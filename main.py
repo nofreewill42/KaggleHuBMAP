@@ -46,4 +46,6 @@ nofreewill@nofreewill:/media/nofreewill/8TB-SSD/Visual/hubmap-hacking-the-human-
 
     # Merge the DataFrames
     tile_wsi = tile_meta.merge(wsi_meta, on='source_wsi', how='left')
-    tile_po
+    tile_polygons = tile_wsi.merge(polygons, on='id', how='left')
+
+    
