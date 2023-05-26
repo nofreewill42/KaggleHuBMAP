@@ -45,4 +45,4 @@ nofreewill@nofreewill:/media/nofreewill/8TB-SSD/Visual/hubmap-hacking-the-human-
     polygons = pd.read_json(ds_path / 'polygons.jsonl', lines=True)
 
     # Merge the DataFrames
-    
+    df = tile_meta.merge(wsi_meta, on='source_wsi', how='left')
