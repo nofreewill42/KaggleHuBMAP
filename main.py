@@ -59,4 +59,7 @@ nofreewill@nofreewill:/media/nofreewill/8TB-SSD/Visual/hubmap-hacking-the-human-
         
         def __getitem__(self, idx):
             # Read in the image
-            img_pil
+            img_pil = Image.open(ds_path / 'train' / self.tile_polygons.loc[idx, 'id'] / '.tiff')
+
+
+    ds 
