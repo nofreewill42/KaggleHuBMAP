@@ -49,4 +49,5 @@ nofreewill@nofreewill:/media/nofreewill/8TB-SSD/Visual/hubmap-hacking-the-human-
     tile_polygons = tile_wsi.merge(polygons, on='id', how='left')
 
     # pytorch dataset class
-    class
+    class HuBMAPDataset(Dataset):
+        def __init__(self, df
