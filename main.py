@@ -57,4 +57,5 @@ nofreewill@nofreewill:/media/nofreewill/8TB-SSD/Visual/hubmap-hacking-the-human-
             return len(self.tile_polygons)
         
         def __getitem__(self, idx):
-            
+            # Read in the image
+            img = skimage.io.imread(...
