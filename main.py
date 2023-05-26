@@ -68,8 +68,8 @@ nofreewill@nofreewill:/media/nofreewill/8TB-SSD/Visual/hubmap-hacking-the-human-
             
             # Initialize mask
             mask = np.zeros((512, 512), dtype=np.float32)
-                
 
+    
             return img_pil, 
 
     ds = HuBMAPDataset(tile_polygons)
